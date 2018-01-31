@@ -6,6 +6,8 @@ Dependences:
 
 Compile: 
 
+Example usage:
+>>> npcf 100 100 0 0 im00.csv
 
 TO DO:
 	- Complete README
