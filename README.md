@@ -114,7 +114,7 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
 ```
 
-#### TO DO:
+#### Pending tasks:
 
  -  ERROR to fix when almost all data entries are equal. For example, try
 
@@ -127,5 +127,7 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
  -  Write subroutines to write output files.
 
  -  Complete implementation of S4(dx1,dy1,dx2,dy2,dx3,dy3).
+
+ -  Verify implementation for odd nx and ny.
 
  -  Add inference subroutines.
