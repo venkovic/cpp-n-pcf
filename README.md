@@ -28,7 +28,7 @@ nx, ny: Size of the 2D sub-slice of data to analyze
 
 x0, y0: upper left starting point of sub-slice in data file 
 
-verb: Control display settings.
+verb: Controls display settings
 
 ​		0: No output
 
@@ -120,10 +120,10 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
     ./npcf 12 11 0 0 im00.csv
     ```
 
- -  Use symmetry to copy components of hsn using symmetry.
+ -  Compute hs3 on minimum domain and copy values to other components instead of repeating calculations
 
- -  Write out sn using symmetry
+ -  Write subroutines to write output files
 
- -  Complete implementation of S4(dx1,)
+ -  Complete implementation of S4(dx1,dy1,dx2,dy2,dx3,dy3)
 
- -  Add inference subroutines.
+ -  Add inference subroutines
