@@ -6,14 +6,18 @@ Author: Nicolas Venkovic
 
 email: nvenkov1@jhu.edu
 
-#### Dependences:
+#### Supported OS:
 
- - FFTW3
+ - Linux.
 
-#### Compiling instructions: 
+#### Dependencies:
+
+ - g++, FFTW3.
+
+#### Installation: 
 
 ```bash
-$ g++ 
+$ make -f Makefile CONF=Release
 ```
 
 #### Usage:
@@ -32,7 +36,7 @@ verb: Controls display settings
 
  - 0: No output
  - 1: Error messages only
- - 2: Error messages, 2D slice of data, S2 results and S3 results for comparison	
+    - 2: Error messages, 2D slice of data, S2 results and S3 results for comparison
 
 #### Example:
 
