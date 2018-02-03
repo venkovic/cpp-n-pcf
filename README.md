@@ -119,7 +119,7 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
  -  ERROR to fix when almost all data entries are equal. For example, try
 
     ```bash
-    ./dist/GNU-Linux/npcf 12 11 0 0 im00.csv
+    $ ./dist/GNU-Linux/npcf 12 11 0 0 im00.csv
     ```
 
  -  Compute hs3 on minimum domain and copy values to other components instead of repeating calculations.
