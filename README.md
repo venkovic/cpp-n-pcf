@@ -13,13 +13,13 @@ email: nvenkov1@jhu.edu
 #### Compiling instructions: 
 
 ```bash
-g++ 
+$ g++ 
 ```
 
 #### Usage:
 
 ```bash
-./npcf nx ny x0 y0 verb data.in
+$ ./npcf nx ny x0 y0 verb data.in
 ```
 
 data.in: 2D csv data file
@@ -30,16 +30,14 @@ x0, y0: upper left starting point of sub-slice in data file
 
 verb: Controls display settings
 
-​		0: No output
-
-​	  	1: Error messages only
-
-​		2: Error messages, 2D slice of data, S2 results and S3 results for comparison	
+ - 0: No output
+ - 1: Error messages only
+ - 2: Error messages, 2D slice of data, S2 results and S3 results for comparison	
 
 #### Example:
 
 ```bash
-./npcf 30 30 0 0 2 im00.csv
+$ ./npcf 30 30 0 0 2 im00.csv
 
 2D slice of data: 
 
