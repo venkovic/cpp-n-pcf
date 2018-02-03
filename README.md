@@ -23,7 +23,7 @@ $ make -f Makefile CONF=Release
 #### Usage:
 
 ```bash
-$ ./npcf nx ny x0 y0 verb data.in
+$ ./dist/GNU-Linux/npcf nx ny x0 y0 verb data.in
 ```
 
 data.in: 2D csv data file
@@ -36,12 +36,12 @@ verb: Controls display settings
 
  - 0: No output
  - 1: Error messages only
-    - 2: Error messages, 2D slice of data, S2 results and S3 results for comparison
+- 2: Error messages, 2D slice of data, S2 results and S3 results for comparison
 
 #### Example:
 
 ```bash
-$ ./npcf 30 30 0 0 2 im00.csv
+$ ./dist/GNU-Linux/npcf 30 30 0 0 2 im00.csv
 
 2D slice of data: 
 
@@ -119,7 +119,7 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
  -  ERROR to fix when almost all data entries are equal. For example, try
 
     ```bash
-    ./npcf 12 11 0 0 im00.csv
+    ./dist/GNU-Linux/npcf 12 11 0 0 im00.csv
     ```
 
  -  Compute hs3 on minimum domain and copy values to other components instead of repeating calculations
