@@ -22,6 +22,9 @@ public:
     int get_s2();
     int get_s3();
     int get_s4();
+    
+    double get_s2_single_value(int, int);
+    
     //
     // Wrappers of the image and S2, S3 and S4 estimates enabling user-friendly indexation
     RealSignal2D im;

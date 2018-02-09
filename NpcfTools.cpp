@@ -43,12 +43,48 @@ int NpcfTools::read_file(int nx, int ny, int x0, int y0, int verb) {
     im_to_him=fftw_plan_dft_r2c_2d(nx,ny,im_data,him_data,FFTW_ESTIMATE);
     
     // Execute FFTW plan
-    fftw_execute(im_to_him); 
+    //fftw_execute(im_to_him); 
     
     // Destroy FFTW plans
     fftw_destroy_plan(im_to_him);
     
     return error;
+}
+
+double NpcfTools::get_s2_single_value(int i, int j) {
+    double s2=0;
+    if (i>=0 && j>=0) {
+        for (int k=0;k<nx-i;k++) {
+            for (int l=0;l<ny-j;l++) {
+                s2+=im(i+k,j+l)*im(k,l);
+            }            
+        }
+        return s2/(nx-i)/(ny-j);
+    }
+    else if (i>=0 && j<0) {
+        for (int k=0;k<nx-i;k++) {
+            for (int l=0;l<ny+j;l++) {
+                s2+=im(i+k,l)*im(k,ny+j+l);
+            }            
+        }
+        return s2/(nx-i)/(ny+j);
+    }
+    else if (i<0 && j>=0) {
+        for (int k=0;k<nx+i;k++) {
+            for (int l=0;l<ny-j;l++) {
+                s2+=im(k,j+l)*im(nx+i+k,l);
+            }            
+        }
+        return s2/(nx+i)/(ny-j);
+    }
+    else {
+        for (int k=0;k<nx+i;k++) {
+            for (int l=0;l<ny+j;l++) {
+                s2+=im(k,l)*im(nx+i+k,ny+j+l);
+            }            
+        }
+        return s2/(nx+i)/(ny+j);
+    }
 }
 
 int NpcfTools::get_s2() {
