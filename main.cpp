@@ -45,7 +45,18 @@ int main(int argc, char** argv) {
         }
         else {
             cout << "test" << endl;
-            cout << npcf.get_s2_single_value(0,0) << endl;
+            cout << npcf.get_s2_single_value(20,39) << endl;
+            double s3;
+            
+            int j=0;
+            int k=0;
+            for (int i=-30;i<=30;i++) {
+                for (int l=-30;l<=30;l++) {
+                    printf("%d %d %d %d\n",i,j,k,l);
+                    s3=npcf.get_s3_single_value(i,j,k,l);
+                }               
+            }
+            cout << npcf.get_s3_single_value(20,39,2,13) << endl;
         }
     }
     return 0;

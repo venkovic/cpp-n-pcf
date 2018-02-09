@@ -24,6 +24,7 @@ public:
     int get_s4();
     
     double get_s2_single_value(int, int);
+    double get_s3_single_value(int, int, int, int);
     
     //
     // Wrappers of the image and S2, S3 and S4 estimates enabling user-friendly indexation

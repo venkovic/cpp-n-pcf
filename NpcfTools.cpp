@@ -87,6 +87,27 @@ double NpcfTools::get_s2_single_value(int i, int j) {
     }
 }
 
+
+double NpcfTools::get_s3_single_value(int i, int j, int k, int l) {
+    double s3=0;
+    int x0l=max(0,max(i,k));
+    int x0r=min(nx,min(nx+i,nx+k));
+    int x1l=x0l-i;
+    int x2l=x0l-k;
+    int dx=x0r-x0l;
+    int y0l=max(0,max(j,l));
+    int y0r=min(ny,min(ny+j,ny+l));
+    int y1l=y0l-j;
+    int y2l=y0l-l;
+    int dy=y0r-y0l;    
+    for (int m=0;m<dx;m++) {
+        for (int n=0;n<dy;n++) {
+            s3+=im(x0l+m,y0l+n)*im(x1l+m,y1l+n)*im(x2l+m,y2l+n);
+        }        
+    }
+    return s3/dx/dy;
+}
+
 int NpcfTools::get_s2() {
     int error=0;
 
