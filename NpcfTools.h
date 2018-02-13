@@ -26,7 +26,7 @@ public:
     int get_full_anistropic_s3_by_FFT();
     int get_full_anistropic_s4_by_FFT();
     //
-    // Single value anisotropic naive estimator of S2, S3, and S4
+    // Single valued anisotropic naive estimator of S2, S3, and S4
     double get_single_value_anisotropic_s2(int, int);
     double get_single_value_anisotropic_s3(int, int, int, int);  
     //
