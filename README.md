@@ -13,7 +13,8 @@ email: nvenkov1@jhu.edu
 #### Dependencies:
 
  - g++, FFTW3, Eigen.
- - Remark: Download the [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) header and source files and place them as is in a folder ./Eigen. 
+ - Your g++ installation should enable a link to FFTW3 shared libraries with the option -lfftw3. 
+ - [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) header and source files need to be downloaded and placed as in the current directory. 
 
 #### Installation: 
 
