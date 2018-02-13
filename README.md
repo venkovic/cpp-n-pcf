@@ -2,11 +2,11 @@
 
 ##### A C++ program for estimation and parametric inference of n-point correlation functions of bi-dimensional random signals sampled on regular grids.
 
-
-
 Author: Nicolas Venkovic
 
 email: nvenkov1@jhu.edu
+
+
 
 #### Compiler and dependencies:
 
@@ -114,7 +114,7 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
 ```
 
-#### Formats of input files
+#### Formats of input
 
 
 
@@ -124,32 +124,33 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
   ```
   nx,ny
-  s2(-nx,0),s2(-nx,0),....,s2(-nx,ny-1),s2(-nx,ny)
-  s2(-nx+1,0),s2(-nx+1,0),....,s2(-nx+1,ny-1),s2(-nx+1,ny)
-  s2(-nx+2,0),s2(-nx+2,0),....,s2(-nx+2,ny-1),s2(-nx+2,ny)
+  s2(-nx,0),s2(-nx,1),....,s2(-nx,ny-1),s2(-nx,ny)
+  s2(-nx+1,0),s2(-nx+1,1),....,s2(-nx+1,ny-1),s2(-nx+1,ny)
+  s2(-nx+2,0),s2(-nx+2,1),....,s2(-nx+2,ny-1),s2(-nx+2,ny)
      :      :               :       :
      :      :               :       :
-  s2(-1,0),s2(-1,0),....,s2(-1,ny-1),s2(-1,ny)
-  s2(0,0),s2(0,0),....,s2(0,ny-1),s2(0,ny)
-  s2(1,0),s2(1,0),....,s2(1,ny-1),s2(1,ny)
+  s2(-1,0),s2(-1,1),....,s2(-1,ny-1),s2(-1,ny)
+  s2(0,0),s2(0,1),....,s2(0,ny-1),s2(0,ny)
+  s2(1,0),s2(1,1),....,s2(1,ny-1),s2(1,ny)
      :      :               :       :
      :      :               :       :
-  s2(nx-1,0),s2(nx-1,0),....,s2(nx-1,ny-1),s2(nx-1,ny)
-  s2(nx,0),s2(nx,0),....,s2(nx,ny-1),s2(nx,ny)
+  s2(nx-1,0),s2(nx-1,1),....,s2(nx-1,ny-1),s2(nx-1,ny)
+  s2(nx,0),s2(nx,1),....,s2(nx,ny-1),s2(nx,ny)
   ```
 
 
-- foo.s3 : Complete anisotropic 3-pcf estimator of point configurations with fixed opening and rotation angles.
+- foo.s3 : Anisotropic 3-pcf estimator of point configurations with fixed opening and rotation angles.
 
   ```
   nx,ny
-  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
-  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
-  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
-     :      :               :       :
-     :      :               :       :
-  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
-  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
+  x1,y1,x2,y2
+  s3(0,0,0,0),
+  s3(dx1,dy1,0,0),
+  s3(2*dx1,2*dy1,0,0),
+        :
+        :     
+  s3((nx-1)*dx1,(nx-1)*dy1,0,0), 
+  s3(nx*dx1,nx*dy1,0,0),
   ```
 
 #### Pending tasks:
