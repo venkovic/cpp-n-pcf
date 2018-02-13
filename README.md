@@ -8,7 +8,7 @@ Author: Nicolas Venkovic
 
 email: nvenkov1@jhu.edu
 
-#### Dependencies:
+#### Compiler and dependencies:
 
  - g++, FFTW3, Eigen.
  - Enable g++ to link FFTW3 shared libraries with the option -lfftw3. 
