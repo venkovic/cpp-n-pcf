@@ -16,18 +16,19 @@ int main(int argc, char** argv) {
     int verb = atoi(argv[5]);
     string fname = argv[6];
     
+    
     NpcfTools npcf(fname);
     int error = npcf.read_file(nx,ny,x0,y0,verb);
     if (!error) {
         
         if (false) {
             if (verb>1) {
-                npcf.get_s2();  
+                npcf.get_full_anistropic_s2_by_FFT();  
                 printf("\ns2(0,0) = %f, s2(1,0) = %f, s2(2,0) = %f\n",npcf.s2(0,0),npcf.s2(1,0),npcf.s2(2,0));
                 printf("\ns2(0,0) = %f, s2(0,1) = %f, s2(0,2) = %f\n",npcf.s2(0,0),npcf.s2(0,1),npcf.s2(0,2));
             }
 
-            npcf.get_s3();     
+            npcf.get_full_anistropic_s3_by_FFT();
             if (verb>1) {
                 printf("\ns3(0,0,0,0) = %f, s3(1,0,0,0) = %f, s3(2,0,0,0) = %f\n",npcf.s3(0,0,0,0),npcf.s3(1,0,0,0),npcf.s3(2,0,0,0));
                 printf("\ns3(0,0,0,0) = %f, s3(0,1,0,0) = %f, s3(0,2,0,0) = %f\n",npcf.s3(0,0,0,0),npcf.s3(0,1,0,0),npcf.s3(0,2,0,0));
@@ -44,19 +45,17 @@ int main(int argc, char** argv) {
             }
         }
         else {
-            cout << "test" << endl;
-            cout << npcf.get_s2_single_value(20,39) << endl;
+            
             double s3;
             
             int j=0;
-            int k=0;
-            for (int i=-30;i<=30;i++) {
-                for (int l=-30;l<=30;l++) {
-                    printf("%d %d %d %d\n",i,j,k,l);
-                    s3=npcf.get_s3_single_value(i,j,k,l);
+            int k=0;            
+            for (int i=0;i<=60;i++) {
+                for (int l=0;l<=60;l++) {
+                    //printf("%d %d %d %d\n",i,j,k,l);
+                    s3=npcf.get_single_value_anisotropic_s3(i,j,k,l);
                 }               
             }
-            cout << npcf.get_s3_single_value(20,39,2,13) << endl;
         }
     }
     return 0;
