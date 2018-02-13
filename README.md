@@ -2,7 +2,7 @@
 
 ##### A C++ program for estimation and parametric inference of n-point correlation functions of bi-dimensional random signals sampled on regular grids.
 
-​          .
+
 
 Author: Nicolas Venkovic
 
@@ -113,6 +113,44 @@ s3(0,0,0,0) = 0.668750, s3(0,0,-1,0) = 0.626250, s3(0,0,-2,0) = 0.590625
 s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
 ```
+
+#### Formats of input files
+
+
+
+#### Formats of output files
+
+- foo.s2 : Complete anisotropic 2-pcf estimator.
+
+  ```
+  nx,ny
+  s2(-nx,0),s2(-nx,0),....,s2(-nx,ny-1),s2(-nx,ny)
+  s2(-nx+1,0),s2(-nx+1,0),....,s2(-nx+1,ny-1),s2(-nx+1,ny)
+  s2(-nx+2,0),s2(-nx+2,0),....,s2(-nx+2,ny-1),s2(-nx+2,ny)
+     :      :               :       :
+     :      :               :       :
+  s2(-1,0),s2(-1,0),....,s2(-1,ny-1),s2(-1,ny)
+  s2(0,0),s2(0,0),....,s2(0,ny-1),s2(0,ny)
+  s2(1,0),s2(1,0),....,s2(1,ny-1),s2(1,ny)
+     :      :               :       :
+     :      :               :       :
+  s2(nx-1,0),s2(nx-1,0),....,s2(nx-1,ny-1),s2(nx-1,ny)
+  s2(nx,0),s2(nx,0),....,s2(nx,ny-1),s2(nx,ny)
+  ```
+
+
+- foo.s3 : Complete anisotropic 3-pcf estimator of point configurations with fixed opening and rotation angles.
+
+  ```
+  nx,ny
+  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
+  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
+  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
+     :      :               :       :
+     :      :               :       :
+  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
+  s2(0,0),s2(1,0),....,s2(0,ny-1),s2(0,ny)
+  ```
 
 #### Pending tasks:
 
