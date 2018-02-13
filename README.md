@@ -1,6 +1,8 @@
 ## npcf
 
-##### A C++ program for estimation and (anisotropic) parametric inference of n-point correlation functions of 2D signals sampled on regular grids.
+##### A C++ program for estimation and parametric inference of n-point correlation functions of bi-dimensional random signals sampled on regular grids.
+
+​          .
 
 Author: Nicolas Venkovic
 
