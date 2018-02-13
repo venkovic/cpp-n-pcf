@@ -6,15 +6,11 @@ Author: Nicolas Venkovic
 
 email: nvenkov1@jhu.edu
 
-#### Supported OS:
-
- - Linux.
-
 #### Dependencies:
 
  - g++, FFTW3, Eigen.
  - Enable g++ to link FFTW3 shared libraries with the option -lfftw3. 
- - Download [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) header and source files and copy them as is in the current directory. 
+ - Download [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) header and source files. Copy the Eigen folder as is in the current directory. 
 
 #### Installation: 
 
