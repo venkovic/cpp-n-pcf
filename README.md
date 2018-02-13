@@ -12,7 +12,7 @@ email: nvenkov1@jhu.edu
 
 #### Dependencies:
 
- - g++, FFTW3.
+ - g++, FFTW3, Eigen.
 
 #### Installation: 
 
