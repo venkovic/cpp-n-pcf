@@ -13,6 +13,7 @@ email: nvenkov1@jhu.edu
 #### Dependencies:
 
  - g++, FFTW3, Eigen.
+ - Remark: Download the [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) header and source files and place them as is in a folder ./Eigen. 
 
 #### Installation: 
 
