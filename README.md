@@ -170,13 +170,14 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
   s3(nx*dx1,nx*dy1,0,0)        ,
   ```
 
-#####Isotropic estimators:
+##### Isotropic estimators:
 
 - foo.iso-s2 : Isotropic 2-pcf estimator.
 
   ```
   -
   ```
+
 
 - foo.iso-s3 : Isotropic 3-pcf estimator.
 
