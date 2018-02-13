@@ -120,6 +120,8 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
 #### Formats of output files
 
+##### Anisotropic estimators:
+
 - foo.s2 : Complete anisotropic 2-pcf estimator.
 
   ```
@@ -144,13 +146,49 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
   ```
   nx,ny
   x1,y1,x2,y2
-  s3(0,0,0,0),
-  s3(dx1,dy1,0,0),
-  s3(2*dx1,2*dy1,0,0),
+  s3(0,0,0,0)                  ,
+  s3(dx1,dy1,0,0)              ,
+  s3(2*dx1,2*dy1,0,0)          , s3(2*dx1,2*dy1,0,0),
         :
         :     
   s3((nx-1)*dx1,(nx-1)*dy1,0,0), 
-  s3(nx*dx1,nx*dy1,0,0),
+  s3(nx*dx1,nx*dy1,0,0)        ,
+  ```
+
+
+- foo.s4 : (?)-tropic 4-pcf estimator.
+
+  ```
+  nx,ny
+  x1,y1,x2,y2
+  s3(0,0,0,0)                  ,
+  s3(dx1,dy1,0,0)              ,
+  s3(2*dx1,2*dy1,0,0)          , s3(2*dx1,2*dy1,0,0),
+        :
+        :     
+  s3((nx-1)*dx1,(nx-1)*dy1,0,0), 
+  s3(nx*dx1,nx*dy1,0,0)        ,
+  ```
+
+#####Isotropic estimators:
+
+- foo.iso-s2 : Isotropic 2-pcf estimator.
+
+  ```
+  -
+  ```
+
+- foo.iso-s3 : Isotropic 3-pcf estimator.
+
+  ```
+  -
+  ```
+
+
+- foo.iso-s4 : Isotropic 4-pcf estimator.
+
+  ```
+  -
   ```
 
 #### Pending tasks:
