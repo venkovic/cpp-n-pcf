@@ -20,43 +20,20 @@ int main(int argc, char** argv) {
     NpcfTools npcf(fname);
     int error = npcf.read_file(nx,ny,x0,y0,verb);
     if (!error) {
-        
-        if (false) {
-            if (verb>1) {
-                npcf.get_full_anistropic_s2_by_FFT();  
-                printf("\ns2(0,0) = %f, s2(1,0) = %f, s2(2,0) = %f\n",npcf.s2(0,0),npcf.s2(1,0),npcf.s2(2,0));
-                printf("\ns2(0,0) = %f, s2(0,1) = %f, s2(0,2) = %f\n",npcf.s2(0,0),npcf.s2(0,1),npcf.s2(0,2));
-            }
+        int j=0;
+        int k=0;     
 
-            npcf.get_full_anistropic_s3_by_FFT();
-            if (verb>1) {
-                printf("\ns3(0,0,0,0) = %f, s3(1,0,0,0) = %f, s3(2,0,0,0) = %f\n",npcf.s3(0,0,0,0),npcf.s3(1,0,0,0),npcf.s3(2,0,0,0));
-                printf("\ns3(0,0,0,0) = %f, s3(0,1,0,0) = %f, s3(0,2,0,0) = %f\n",npcf.s3(0,0,0,0),npcf.s3(0,1,0,0),npcf.s3(0,2,0,0));
-                printf("\ns3(0,0,0,0) = %f, s3(0,0,1,0) = %f, s3(0,0,2,0) = %f\n",npcf.s3(0,0,0,0),npcf.s3(0,0,1,0),npcf.s3(0,0,2,0));
-                printf("\ns3(0,0,0,0) = %f, s3(0,0,0,1) = %f, s3(0,0,0,2) = %f\n\n",npcf.s3(0,0,0,0),npcf.s3(0,0,0,1),npcf.s3(0,0,0,2));
+        npcf.get_anisotropic_map_s2(60,60);
+        //npcf.get_anisotropic_map_s3(60,60,0,1,1,0);
 
-                printf("\ns2(0,0) = %f, s2(-1,0) = %f, s2(-2,0) = %f\n",npcf.s2(0,0),npcf.s2(-1,0),npcf.s2(-2,0));
-                printf("\ns2(0,0) = %f, s2(0,-1) = %f, s2(0,-2) = %f\n",npcf.s2(0,0),npcf.s2(0,-1),npcf.s2(0,-2));
-
-                printf("\ns3(0,0,0,0) = %f, s3(-1,0,0,0) = %f, s3(-2,0,0,0) = %f\n",npcf.s3(0,0,0,0),npcf.s3(-1,0,0,0),npcf.s3(-2,0,0,0));
-                printf("\ns3(0,0,0,0) = %f, s3(0,-1,0,0) = %f, s3(0,-2,0,0) = %f\n",npcf.s3(0,0,0,0),npcf.s3(0,-1,0,0),npcf.s3(0,-2,0,0));
-                printf("\ns3(0,0,0,0) = %f, s3(0,0,-1,0) = %f, s3(0,0,-2,0) = %f\n",npcf.s3(0,0,0,0),npcf.s3(0,0,-1,0),npcf.s3(0,0,-2,0));
-                printf("\ns3(0,0,0,0) = %f, s3(0,0,0,-1) = %f, s3(0,0,0,-2) = %f\n\n",npcf.s3(0,0,0,0),npcf.s3(0,0,0,-1),npcf.s3(0,0,0,-2));            
-            }
-        }
-        else {
-            
-            double s3;
-            
-            int j=0;
-            int k=0;            
-            for (int i=0;i<=60;i++) {
-                for (int l=0;l<=60;l++) {
-                    //printf("%d %d %d %d\n",i,j,k,l);
-                    s3=npcf.get_single_value_anisotropic_s3(i,j,k,l);
-                }               
-            }
-        }
+        /*
+        for (int i=-60;i<=60;i++) {
+            for (int l=0;l<=60;l++) {
+                //printf("%d %d %d %d\n",i,j,k,l);
+                s2=npcf.get_single_value_anisotropic_s2(i,l);
+                //s3=npcf.get_single_value_anisotropic_s3(i,j,k,l);
+            }               
+        }*/
     }
     return 0;
 }

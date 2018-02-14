@@ -7,7 +7,7 @@
 #include "NpcfTools.h"
 #include <math.h>
 
-#include <algorithm>
+//#include <algorithm>
 
 #define REAL 0
 #define IMAG 1
@@ -76,7 +76,6 @@ double NpcfTools::get_single_value_anisotropic_s2(int i, int j) {
     }
 }
 
-
 double NpcfTools::get_single_value_anisotropic_s3(int i, int j, int k, int l) {
     double s3=0;
     int x0l=max(0,max(i,k));
@@ -90,6 +89,31 @@ double NpcfTools::get_single_value_anisotropic_s3(int i, int j, int k, int l) {
     return (im_arr.block(x0l,y0l,dx,dy)*im_arr.block(x1l,y1l,dx,dy)*im_arr.block(x2l,y2l,dx,dy)).sum()/dx/dy;
 }
 
+void NpcfTools::get_anisotropic_map_s2(int nx, int ny) {
+    
+    // Allocate memory for estimate S2
+    s2_data=(double *) fftw_malloc(sizeof(double)*(2*nx+1)*(ny+1));
+    s2.initialize(s2_data,2*nx+1,ny+1);
+
+    for (int i=-nx;i<=nx;i++) {
+        for (int j=0;j<=ny;j++) {
+            s2(i,j)=get_single_value_anisotropic_s2(i,j);
+        }
+    }
+}
+
+void NpcfTools::get_anisotropic_map_s3(int nx, int ny, int dx1, int dy1, int dx2, int dy2) {
+
+    // Allocate memory for estimate S3
+    s2_data=(double *) fftw_malloc(sizeof(double)*(nx+1)*(ny+1));
+    s2.initialize(s2_data,2*nx+1,ny+1);
+
+    for (int i=0;i<=nx;i++) {
+        for (int j=0;j<=ny;j++) {
+            s2(i,j)=get_single_value_anisotropic_s3(i*dx1,i*dy1,j*dx2,j*dy2);
+        }
+    }
+}
 
 
 int NpcfTools::get_full_anistropic_s2_by_FFT() {
