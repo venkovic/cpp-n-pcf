@@ -46,6 +46,8 @@ private:
     //
     // Eigen::Array of image used for faster operations in non-FFT-based estimators
     Eigen::ArrayXXf im_arr;   
+    Eigen::ArrayXXf s2_arr;
+    Eigen::ArrayXXf s3_arr; 
     //
     // Wrappers of im and FFT-based estimators of S2, S3 and S4 w/ user-friendly indexation enabled
     //(Data is stored in row-major dynamic arrays im_data, s2_data, ...)
