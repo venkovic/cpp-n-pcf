@@ -23,8 +23,8 @@ int main(int argc, char** argv) {
         int j=0;
         int k=0;     
 
-        //npcf.get_anisotropic_map_s2(60,60);
-        npcf.get_anisotropic_map_s3(60,60,0,1,1,0);
+        //npcf.get_anisotropic_map_s2(60,60,"test.s2");
+        npcf.get_anisotropic_map_s3(60,60,0,1,1,0,"test.s3");
 
         /*
         for (int i=-60;i<=60;i++) {

@@ -60,13 +60,51 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
 ```
 
-#### Formats of input
+#### Public functions of NpcfTools:
+
+- void **get_anisotropic_map_s3**(int **nx**, int **ny**, string **fname**="")
+
+  Computes stuff.
+
+  - nx, ny :
+
+  - dx1, dy1 :
+
+  - dx2, dy2 :
+
+  - fname (optional) :
+
+    ​
+
+- void **get_anisotropic_map_s3**(int **nx**, int **ny**, int **dx1**, int **dy1**, int **dx2**, int **dy2**, string **fname**="")
+
+  Computes stuff.
+
+  - nx, ny :
+
+  - dx1, dy1 :
+
+  - dx2, dy2 :
+
+  - fname (optional) 
+
+    ​
+
+Example:
+
+```c++
+#include "NpcfTools.h"
+
+NpcfTools npcf("im00.csv");
+npcf.get_anisotropic_map_s2(60,60,"im00.s2");
+npcf.get_anisotropic_map_s3(60,60,0,1,1,0,"im00.s3");
+```
 
 
 
 #### Formats of output files
 
-##### Anisotropic estimators:
+##### 	Anisotropic estimators:
 
 - foo.s2 : Complete anisotropic 2-pcf estimator.
 
@@ -91,14 +129,13 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
   ```
   nx,ny
-  x1,y1,x2,y2
-  s3(0,0,0,0)                  ,
-  s3(dx1,dy1,0,0)              ,
-  s3(2*dx1,2*dy1,0,0)          , s3(2*dx1,2*dy1,0,0),
-        :
-        :     
-  s3((nx-1)*dx1,(nx-1)*dy1,0,0), 
-  s3(nx*dx1,nx*dy1,0,0)        ,
+  dx1,dy1,dx2,dyy
+  s3(0,0,0,0)          , s3(0,0,dx2,dy2)          , ...., s3(0,0,ny*dx2,ny*dy2)
+  s3(dx1,dy1,0,0)      , s3(dx1,dy1,dx2,dy2)      , ...., s3(dx,dy,ny*dx2,ny*dy2)
+  s3(2*dx1,2*dy1,0,0)  , s3(2*dx1,2*dy1,dx2,dy2)  , ...., s3(2*dx,2*dy,ny*dx2,ny*dy2)
+        :                          :                                   :
+        :                          :                                   :
+  s3(nx*dx1,nx*dy1,0,0), s3(nx*dx1,nx*dy1,dx2,dy2), ...., s3(nx*dx1,nx*dy1,ny*dx2,ny*dy2)
   ```
 
 
@@ -116,7 +153,7 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
   s3(nx*dx1,nx*dy1,0,0)        ,
   ```
 
-##### Isotropic estimators:
+  ##### Isotropic estimators:
 
 - foo.iso-s2 : Isotropic 2-pcf estimator.
 

@@ -27,8 +27,8 @@ public:
     //double get_single_value_anisotropic_s4(int, int, int, int, int ,int);  
     //
     // Naive estimator of anisotropic maps of S2, S3, and S4
-    void get_anisotropic_map_s2(int, int);
-    void get_anisotropic_map_s3(int, int, int, int, int, int);
+    void get_anisotropic_map_s2(int, int, string="");
+    void get_anisotropic_map_s3(int, int, int, int, int, int, string="");
     //double get_full_anisotropic_s4(int, int, int, int, int ,int); 
     //
     // FFT-based estimators of complete anisotropic map of S2, S3 and S4

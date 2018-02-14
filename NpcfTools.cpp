@@ -6,6 +6,7 @@
 
 #include "NpcfTools.h"
 #include <math.h>
+#include <fstream>
 
 //#include <algorithm>
 
@@ -89,26 +90,43 @@ double NpcfTools::get_single_value_anisotropic_s3(int i, int j, int k, int l) {
     return (im_arr.block(x0l,y0l,dx,dy)*im_arr.block(x1l,y1l,dx,dy)*im_arr.block(x2l,y2l,dx,dy)).sum()/dx/dy;
 }
 
-void NpcfTools::get_anisotropic_map_s2(int nx, int ny) {
+void NpcfTools::get_anisotropic_map_s2(int nx, int ny, string fname) {
     
     s2_arr.resize(2*nx+1,ny+1);
+    
+    ofstream fout;
+    if (fname!="") fout.open(fname);
     
     for (int i=-nx;i<=nx;i++) {
         for (int j=0;j<=ny;j++) {
             s2_arr(nx+i,j)=get_single_value_anisotropic_s2(i,j);
+            if (fout) {
+                fout << s2_arr(nx+i,j);
+                if (j<ny) fout << ",";
+            }
         }
+        if (fout) fout << endl;
     }
+    fout.close();
 }
 
-void NpcfTools::get_anisotropic_map_s3(int nx, int ny, int dx1, int dy1, int dx2, int dy2) {
+void NpcfTools::get_anisotropic_map_s3(int nx, int ny, int dx1, int dy1, int dx2, int dy2, string fname) {
 
     
     s3_arr.resize(nx+1,ny+1);
 
+    ofstream fout;
+    if (fname!="") fout.open(fname);    
+    
     for (int i=0;i<=nx;i++) {
         for (int j=0;j<=ny;j++) {
             s3_arr(i,j)=get_single_value_anisotropic_s3(i*dx1,i*dy1,j*dx2,j*dy2);
+            if (fout) {
+                fout << s3_arr(i,j);
+                if (j<ny) fout << ",";
+            }
         }
+        if (fout) fout << endl;
     }
 }
 
