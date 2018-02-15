@@ -131,6 +131,118 @@ void NpcfTools::get_anisotropic_map_s3(int nx, int ny, int dx1, int dy1, int dx2
 }
 
 
+void NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int nx, int ny) {        
+    //get_full_anisotropic_s2_by_FFT();
+    
+    
+    // 1) Find an optimal (dnx,dny)
+    //      - Largest values such that s2_data and hs2_data are allocatable?
+    //      - How do space-time complexities evolve?
+    //              - Larger dnx*dny    => Less loss of information
+    //                                  => Less processes, but what is the complexity per process?
+    //                                                     time  = O()    dnx*dny*log(dnx*dny)
+    //                                                     space = O()
+    //                                  => Larger s2 domain, but is it necessary for short a short range process?
+    //
+    //              - Smaller dnx*dny   => More loss of information
+    //                                  => More processes, but what is the complexity per process?
+    //                                  => Small s2 domain. How small can we go?
+    // 
+    // Remark DFT^{-1}(s2_1+s2_2+...) = DFT^{-1}(N*s2_av)
+    //                                =>
+    //                        N*s2_av = DFT^{-1}(hs2_1+hs2_2+...)
+    //
+    //
+    // Public member variables:  s2
+    // Private member variables: s2_data 
+    // Private member variables: hs2_data, hs2     <= summands used in                get_full_anisotropic_s2_by_seq_FFT()
+    // Private member variable:  hs2_to_s2         <= fftw plan used by               get_full_anisotropic_s2_by_seq_FFT()
+        
+    // Private member variable:  im_to_him         <= fftw plan used in each          get_full_anisotropic_s2_by_FFT()
+    // Private member variable:  im_data, im, him  <= variables related to fftw plan
+    //
+    // NOT member variables :   hs2_data_i, hs2_i <= variables used in each           get_full_anisotropic_s2_by_FFT()
+    // 
+    
+    // 
+    
+    // Can you make it so that it works "optimally" whether we segment or not
+    // Be sure to handle allocation errors properly!
+    //
+    // Algo:
+    //         1) Divide slice of data into sub-slices                          get_full_anisotropic_s2_by_seq_FFT
+    //              => Allocate hs2_data, hs2
+    //         2) For each sub-slice:                                           get_full_anisotropic_s2_by_FFT
+    //              a) Use im_to_him => him_data, him
+    //              b) Compute hs2_data_i, hs2_i
+    //              c) Add hs2_data_i to hs2_data
+    //         3) Allocate s2_data, s2                                          get_full_anisotropic_s2_by_seq_FFT
+    //         4) Create, use and destroy hs2_to_s2 plan                        get_full_anisotropic_s2_by_seq_FFT
+    //              => s2_data, s2
+    //         4) Write output file 
+
+    
+    
+    //
+    // Attempt allocating memory for FFT-based estimator without segmenting domain
+    s2_data=(double *) fftw_malloc(sizeof(double)*nx*ny);
+    if (s2_data != NULL) s2.initialize(s2_data,nx,ny);
+    //
+    // If necessary, segment domain into sub-domains
+    if (s2_data == NULL) {
+        domainIsSegmented=true;
+        int dnx, dny;
+        int nDomainX, nDomainY;
+        //
+        // Allocate memory for FFT-based estimator by segmenting domain
+        s2_data=(double *) fftw_malloc(sizeof(double)*dnx*dny);
+        s2.initialize(s2_data,dnx,dny);
+    }
+    else {
+        domainIsSegmented=false;
+    }
+    //
+    // Compute and add the contribution to hS2 of each sub-domain
+    if (domainIsSegmented) {
+        for (int iDomainX=0;iDomainX<nDomainX;iDomainX++) {
+            for (int iDomainY=0;iDomainY<nDomainY;iDomainY++) { 
+                //
+                // Compute
+                get_full_anistropic_s2_by_FFT();
+                //
+                // Add contribution
+                for (int k=0;k<nx*ny) {
+                    s2_data[k]+=s2_data_i[k];
+                }
+            }            
+        }
+
+    }
+    else {
+        get_full_anistropic_s2_by_FFT();
+    }
+    //
+    // Define FFTW plan for transformation hS2 -> S2
+    hs2_to_s2=fftw_plan_dft_c2r_2d(nx,ny,hs2_data,s2_data,FFTW_ESTIMATE);
+    //
+    // Execute FFTW plan
+    fftw_execute(hs2_to_s2);  
+    //    
+    // Write output file
+    
+    //
+    // Destroy FFTW plan and free memory
+    fftw_destroy_plan(hs2_to_s2);    
+    fftw_free(hs2_data);    
+}
+
+void NpcfTools::get_full_anisotropic_s3_by_seq_FFT(int nx, int ny) {    
+}
+
+void NpcfTools::get_full_anisotropic_s4_by_seq_FFT(int nx, int ny) {
+}
+
+
 int NpcfTools::get_full_anistropic_s2_by_FFT() {
     int error=0;
 
@@ -170,10 +282,14 @@ int NpcfTools::get_full_anistropic_s3_by_FFT() {
     
     // Allocate memory for estimate S3
     s3_data=(double *) fftw_malloc(sizeof(double)*nx*ny*nx*ny);
+    if (s3_data == NULL) {
+        printf("Could not allocate enough memory for s3_data\n");
+    }
     s3.initialize(s3_data,nx,ny,nx,ny);
     
     // Allocate memory for DFT of estimate S3, i.e. hS3
     hs3_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*nx*ny*nx*nyh);
+    if (hs3_data == NULL) printf("Could not allocate enough memory for hs3_data\n");
     hs3.initialize(hs3_data,nx,ny,nx,ny);
     
     // Define FFTW plan for transformation hS3 -> S3
