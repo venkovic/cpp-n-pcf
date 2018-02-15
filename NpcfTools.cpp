@@ -131,6 +131,7 @@ void NpcfTools::get_anisotropic_map_s3(int nx, int ny, int dx1, int dy1, int dx2
 }
 
 
+
 void NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int nx, int ny) {        
     //get_full_anisotropic_s2_by_FFT();
     
@@ -184,22 +185,45 @@ void NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int nx, int ny) {
     
     
     //
-    // Attempt allocating memory for FFT-based estimator without segmenting domain
+    // Allocate memory for anisotropic FFT-based estimator of S2
     s2_data=(double *) fftw_malloc(sizeof(double)*nx*ny);
-    if (s2_data != NULL) s2.initialize(s2_data,nx,ny);
+    hs2_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*nx*nyh);    
     //
-    // If necessary, segment domain into sub-domains
-    if (s2_data == NULL) {
-        domainIsSegmented=true;
-        int dnx, dny;
-        int nDomainX, nDomainY;
+    if (s2_data != NULL && hs2_data != NULL) {
         //
-        // Allocate memory for FFT-based estimator by segmenting domain
-        s2_data=(double *) fftw_malloc(sizeof(double)*dnx*dny);
-        s2.initialize(s2_data,dnx,dny);
+        // Memory successfully allocated
+        s2.initialize(s2_data,nx,ny);
+        hs2.initialize(hs2_data,nx,ny);   
     }
-    else {
-        domainIsSegmented=false;
+    else { 
+        //
+        // Memory could not be allocated. Segment domain into sub-domains
+        domainIsSegmented=true;
+        //
+        // Recursively attempt allocating memory for smaller domains
+        int dnx=nx/2;
+        int dny=ny/2;
+        int dnyh=dny/2+1;
+        while (s2_data == NULL || s2_data_i == NULL ||  hs2_data_i == NULL) {
+            if (s2_data != NULL) fftw_free(s2_data); 
+            if (hs2_data != NULL) fftw_free(hs2_data);
+            if (hs2_data_i != NULL) fftw_free(hs2_data_i);
+            //
+            // Allocate memory for FFT-based estimator by segmenting domain
+            s2_data=(double *) fftw_malloc(sizeof(double)*dnx*dny);
+            s2.initialize(s2_data,dnx,dny);
+            hs2_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dnyh);   
+            hs2.initialize(hs2_data,dnx,dny);  
+            hs2_data_i=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dnyh);   
+            hs2_i.initialize(hs2_data_i,dnx,dny);
+            dnx/=2;
+            dny/=2;
+            dnyh=dny/2+1;
+        }
+        //
+        // Divide domain into nDomainX*nDomainY sub-domains 
+        int nDomainX=nx/dnx;
+        int nDomainY=ny/dny;
     }
     //
     // Compute and add the contribution to hS2 of each sub-domain
