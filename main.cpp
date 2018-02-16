@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
         int j=0;
         int k=0;     
         
-        int error_npcf=npcf.get_full_anisotropic_s3_by_seq_FFT(60,60);
+        int error_npcf=npcf.get_full_anisotropic_s3_by_seq_FFT(70,70,"test_FFT_70by70.s3");
         
         //npcf.get_anisotropic_map_s2(60,60,"test.s2");
         //npcf.get_anisotropic_map_s3(60,60,0,1,1,0,"test.s3");

@@ -320,7 +320,7 @@ void NpcfTools::get_full_anisotropic_s2_by_seq_FFT() {
     if (hs2_sum_data != NULL) fftw_free(hs2_sum_data);    
 }
 
-int NpcfTools::get_full_anisotropic_s3_by_seq_FFT(int dnx, int dny) {
+int NpcfTools::get_full_anisotropic_s3_by_seq_FFT(int dnx, int dny, string fname) {
     this->dnx=dnx;
     this->dny=dny;
     dnyh=dny/2+1;
@@ -460,7 +460,17 @@ int NpcfTools::get_full_anisotropic_s3_by_seq_FFT(int dnx, int dny) {
     // Write output file
     
     
-
+    ofstream fout;
+    if (fname!="") fout.open(fname);    
+    
+    for (int i=0;i<=dnx/2;i++) {
+        for (int j=0;j<=dny/2;j++) {
+            fout << s3(i,0,0,j)/nDomains;
+            if (j<dny/2) fout << ",";
+        }
+        if (i<dnx/2) fout << "\n";
+    }
+    fout.close();
     cout << endl << s3(0,0,0,0)/nDomains << endl;    
     
     //
