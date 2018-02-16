@@ -32,7 +32,7 @@ public:
     //double get_full_anisotropic_s4(int, int, int, int, int ,int); 
     //
     // Sequential FFT-based estimators of complete anisotropic maps of S2, S3 and S4
-    void get_full_anisotropic_s2_by_seq_FFT();
+    int get_full_anisotropic_s2_by_seq_FFT(int, int, string);
     int get_full_anisotropic_s3_by_seq_FFT(int, int, string);
     void get_full_anisotropic_s4_by_seq_FFT();
     //
@@ -70,8 +70,7 @@ private:
     fftw_plan im_to_him = NULL;
     
     double *im_i_data = NULL;    
-    double *im_data_i = NULL;
-    RealSignal2D im_i;    
+    //RealSignal2D im_i;    
     
     //
     // Data structures for FFT-based estimators of S2
@@ -81,7 +80,6 @@ private:
     
     fftw_complex *hs2_data = NULL; 
     FftOfRealSignal2D hs2;
-    
     fftw_plan hs2_to_s2 = NULL;
     //
     // Data structures for FFT-based estimators of S3

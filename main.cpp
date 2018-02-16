@@ -18,13 +18,17 @@ int main(int argc, char** argv) {
     
     NpcfTools npcf(fname);
     int error = npcf.read_file(nx,ny,x0,y0,verb);
-      
-    
+        
     if (!error) {
         int j=0;
         int k=0;     
         
-        int error_npcf=npcf.get_full_anisotropic_s3_by_seq_FFT(70,70,"test_FFT_70by70.s3");
+        
+        
+        
+        //int error_3pcf=npcf.get_full_anisotropic_s3_by_seq_FFT(70,70,"test_FFT_70by70.s3");
+        int error_2pcf=npcf.get_full_anisotropic_s2_by_seq_FFT(280,ny,"test_FFT_280by902_1001.s2");
+        //int error_2pcf=npcf.get_full_anisotropic_s2_by_seq_FFT(nx,ny,"test_FFT_560by902_1001.s2");
         
         //npcf.get_anisotropic_map_s2(60,60,"test.s2");
         //npcf.get_anisotropic_map_s3(60,60,0,1,1,0,"test.s3");
