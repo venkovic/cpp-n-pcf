@@ -26,8 +26,8 @@ int main(int argc, char** argv) {
         
         
         
-        //int error_3pcf=npcf.get_full_anisotropic_s3_by_seq_FFT(70,70,"test_FFT_70by70.s3");
-        int error_2pcf=npcf.get_full_anisotropic_s2_by_seq_FFT(280,ny,"test_FFT_280by902_1001.s2");
+        int error_3pcf=npcf.get_full_anisotropic_s3_by_seq_FFT(70,70,"test_FFT_70by70.s3");
+        //int error_2pcf=npcf.get_full_anisotropic_s2_by_seq_FFT(280,ny,"test_FFT_280by902_1001.s2");
         //int error_2pcf=npcf.get_full_anisotropic_s2_by_seq_FFT(nx,ny,"test_FFT_560by902_1001.s2");
         
         //npcf.get_anisotropic_map_s2(60,60,"test.s2");

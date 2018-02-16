@@ -202,10 +202,6 @@ int NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int dnx, int dny, string fname
     cout << nDomainY << " " << dny << endl;
     cout << nDomains << endl;        
     
-    
-    double frac=0;
-    double frac2=0;
-    int n_elems=0;
     //
     // Compute and add the contribution to hS2 of each sub-domain
     if (domainIsSegmented) {
@@ -221,10 +217,7 @@ int NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int dnx, int dny, string fname
                     for (int j=0;j<dny;j++) {
                         //im_i(i,j)=im(iDomainX*nDomainX+i,iDomainY*nDomainY+j);
                         //im_i_data[j+i*dny]=im_arr(iDomainX*nDomainX+i,iDomainY*nDomainY+j);
-                        im_i_data[j+i*dny]=im_data[(iDomainX*nDomainX+i)*ny+iDomainY*nDomainY+j];
-                        frac+=im_i_data[j+i*dny];
-                        frac2+=im_arr(iDomainX*nDomainX+i,iDomainY*nDomainY+j);
-                        n_elems++;
+                        im_i_data[j+i*dny]=im_data[(iDomainX*dnx+i)*ny+iDomainY*dny+j];
                     }
                 }
                 
@@ -279,7 +272,12 @@ int NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int dnx, int dny, string fname
     //    
     // Write output file
     
-    if (domainIsSegmented) cout << "vol_fracs = " << frac/nx/ny << "," << frac2/nx/ny << "," << n_elems << "=" << nx*ny<< endl;
+    double frac0=0;
+    for (int i=0;i<nx;i++) {
+        for (int j=0;j<ny;j++) {
+            frac0+=im_arr(i,j);
+        }
+    }
     
     ofstream fout;
     if (fname!="") fout.open(fname);    
@@ -374,7 +372,7 @@ int NpcfTools::get_full_anisotropic_s3_by_seq_FFT(int dnx, int dny, string fname
                     for (int j=0;j<dny;j++) {
                         //im_i(i,j)=im(iDomainX*nDomainX+i,iDomainY*nDomainY+j);
                         //im_i_data[j+i*dny]=im_arr(iDomainX*nDomainX+i,iDomainY*nDomainY+j);
-                        im_i_data[j+i*dny]=im_data[(iDomainX*nDomainX+i)*ny+iDomainY*nDomainY+j];
+                        im_i_data[j+i*dny]=im_data[(iDomainX*dnx+i)*ny+iDomainY*dny+j];
                     }
                 }
                 
