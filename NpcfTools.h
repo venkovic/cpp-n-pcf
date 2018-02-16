@@ -33,7 +33,7 @@ public:
     //
     // Sequential FFT-based estimators of complete anisotropic maps of S2, S3 and S4
     void get_full_anisotropic_s2_by_seq_FFT();
-    void get_full_anisotropic_s3_by_seq_FFT();
+    int get_full_anisotropic_s3_by_seq_FFT(int, int);
     void get_full_anisotropic_s4_by_seq_FFT();
     //
     // FFT-based estimators of complete anisotropic map of S2, S3 and S4

@@ -320,46 +320,34 @@ void NpcfTools::get_full_anisotropic_s2_by_seq_FFT() {
     if (hs2_sum_data != NULL) fftw_free(hs2_sum_data);    
 }
 
-void NpcfTools::get_full_anisotropic_s3_by_seq_FFT() {
-   //
-    // Allocate memory for anisotropic FFT-based estimator of S2
-    s3_data=(double *) fftw_malloc(sizeof(double)*nx*ny*nx*ny);
-    hs3_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*nx*ny*nx*nyh);
-    him_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*nx*ny*nx*nyh);
+int NpcfTools::get_full_anisotropic_s3_by_seq_FFT(int dnx, int dny) {
+    this->dnx=dnx;
+    this->dny=dny;
+    dnyh=dny/2+1;
     //
-    if (s3_data != NULL && hs3_data != NULL && him_data!= NULL) {
-        //
-        // Memory successfully allocated
-        s3.initialize(s3_data,nx,ny,nx,ny);
-        hs3.initialize(hs3_data,nx,ny,nx,ny);
-        him.initialize(him_data,nx,ny);
-        //
-        // Create FFTW plan
-        im_to_him=fftw_plan_dft_r2c_2d(nx,ny,im_data,him_data,FFTW_ESTIMATE);
+    nDomainX=nx/dnx;
+    nDomainY=ny/dny;
+    nDomains=nDomainX*nDomainY;    
+    //
+    //
+    // Allocate memory for anisotropic FFT-based estimator of S2
+    s3_data=(double *) fftw_malloc(sizeof(double)*dnx*dny*dnx*dny);
+    hs3_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dny*dnx*dnyh);
+    him_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dny*dnx*dnyh);
+    
+    
+    if (nDomains>1) {
+        domainIsSegmented=true; 
+        im_i_data=(double *) fftw_malloc(sizeof(double)*dnx*dny);
+        hs3_sum_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dny*dnx*dnyh); 
     }
-    else { 
-        //
-        // Memory could not be allocated. Segment domain into sub-domains
-        domainIsSegmented=true;
+ 
+    
+    if (domainIsSegmented)  { 
         //
         // Recursively attempt allocating memory for smaller domains
-        while (s3_data==NULL || hs3_data==NULL || im_i_data==NULL || him_data==NULL || hs3_sum_data==NULL) {
-            if (s3_data != NULL) {fftw_free(s3_data); s3_data = NULL;} 
-            if (hs3_data != NULL) {fftw_free(hs3_data); hs3_data = NULL;} 
-            if (im_i_data != NULL) {fftw_free(im_i_data); im_i_data = NULL;} 
-            if (him_data != NULL) {fftw_free(him_data); him_data = NULL;} 
-            if (hs3_sum_data != NULL) {fftw_free(hs3_sum_data); hs3_sum_data = NULL;} 
-            //
-            dnx/=2;
-            dny/=2;
-            dnyh=dny/2+1;
-            //
-            // Allocate memory for FFT-based estimator by segmenting domain
-            s3_data=(double *) fftw_malloc(sizeof(double)*dnx*dny*dnx*dny);
-            hs3_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dny*dnx*dnyh);
-            im_i_data=(double *) fftw_malloc(sizeof(double)*dnx*dny);
-            him_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dnyh);
-            hs3_sum_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dny*dnx*dnyh); 
+        if (s3_data==NULL || hs3_data==NULL || im_i_data==NULL || him_data==NULL || hs3_sum_data==NULL) {
+            return 1;
         }
         s3.initialize(s3_data,dnx,dny,dnx,dny);
         hs3.initialize(hs3_data,dnx,dny,dnx,dny);
@@ -374,10 +362,21 @@ void NpcfTools::get_full_anisotropic_s3_by_seq_FFT() {
         nDomainX=nx/dnx;
         nDomainY=ny/dny;
         nDomains=nDomainX*nDomainY;
+    }    
+    else {
+        if (s3_data==NULL || hs3_data==NULL || him_data==NULL) {
+            return 1;
+        }
+        //
+        // Memory successfully allocated
+        s3.initialize(s3_data,dnx,dny,dnx,dny);
+        hs3.initialize(hs3_data,dnx,dny,dnx,dny);
+        him.initialize(him_data,dnx,dny);
+        //
+        // Create FFTW plan
+        im_to_him=fftw_plan_dft_r2c_2d(dnx,dny,im_data,him_data,FFTW_ESTIMATE);
     }
-    
-    
-    
+       
     cout << nDomainX << " " << dnx << endl;
     cout << nDomainY << " " << dny << endl;
     cout << nDomains << endl;    
@@ -389,6 +388,9 @@ void NpcfTools::get_full_anisotropic_s3_by_seq_FFT() {
             for (int iDomainY=0;iDomainY<nDomainY;iDomainY++) { 
                 
                 cout << nDomainY*iDomainX+iDomainY+1 << " / " << nDomains << endl;
+                
+                
+                cout << "stage 1" << endl;
                 //
                 // Extract im_i, get him_i
                 for (int i=0;i<dnx;i++) {
@@ -396,18 +398,28 @@ void NpcfTools::get_full_anisotropic_s3_by_seq_FFT() {
                         im_i(i,j)=im(iDomainX*nDomainX+i,iDomainY*nDomainY+j);
                     }
                 }
+                
+                cout << "stage 2" << endl;
+                
                 fftw_execute(im_to_him);
                 //
                 // Compute
+                
+                cout << "stage 3" << endl;
+                
                 get_full_anistropic_s3_by_FFT();
+
+                cout << "stage 4" << endl;
                 //
                 // Add contribution
                 for (int k=0;k<dnx*dny*dnx*dnyh;k++) {
                     hs3_sum_data[k][REAL]+=hs3_data[k][REAL];
                     hs3_sum_data[k][IMAG]+=hs3_data[k][IMAG];
                 }
+                cout << "stage 5" << endl;
             }            
         }
+        
         
         //
         // Destroy FFTW plan and free memory
@@ -446,6 +458,10 @@ void NpcfTools::get_full_anisotropic_s3_by_seq_FFT() {
     fftw_execute(hs3_to_s3);  
     //    
     // Write output file
+    
+    
+
+    cout << endl << s3(0,0,0,0)/nDomains << endl;    
     
     //
     // Destroy FFTW plan and free memory
@@ -494,7 +510,7 @@ int NpcfTools::get_full_anistropic_s2_by_FFT_old() {
             hs2(i,j,IMAG)=0;
         }
     }    
-    
+   
     // Execute FFTW plan
     fftw_execute(hs2_to_s2);  
     
@@ -511,7 +527,8 @@ int NpcfTools::get_full_anistropic_s2_by_FFT_old() {
 int NpcfTools::get_full_anistropic_s3_by_FFT() {
     int error=0;
     
-    
+    cout << "testing A" << dnx << " " << dny << endl;
+            
     // Compute hS3 from him, component by component
     double a,b,c,d,e,f;
     for (int i=-dnx/2+1;i<=dnx/2;i++) {
