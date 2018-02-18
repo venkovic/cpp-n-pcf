@@ -149,35 +149,38 @@ void NpcfTools::get_anisotropic_map_s3(int nx, int ny, int dx1, int dy1, int dx2
 
 
 int NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int dnx, int dny, string fname) {        
-    
+    //
+    // Size of subdomains
     this->dnx=dnx;
     this->dny=dny;
     dnyh=dny/2+1;
     //
+    // Number of sub-domains
     nDomainX=nx/dnx;
     nDomainY=ny/dny;
     nDomains=nDomainX*nDomainY;   
     //
-    // Allocate memory for anisotropic FFT-based estimator of S2
+    // Allocate memory
     s2_data=(double *) fftw_malloc(sizeof(double)*dnx*dny);
     hs2_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dnyh);
     him_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dnyh);    
-
+    //
     if (nDomains>1) {
         domainIsSegmented=true; 
         im_i_data=(double *) fftw_malloc(sizeof(double)*dnx*dny);
         hs2_sum_data=(fftw_complex *) fftw_malloc(sizeof(fftw_complex)*dnx*dnyh); 
     }
- 
+    //
     if (domainIsSegmented)  { 
         //
-        // Recursively attempt allocating memory for smaller domains
+        // Could not allocate enough memory
         if (s2_data==NULL || hs2_data==NULL || im_i_data==NULL || him_data==NULL || hs2_sum_data==NULL) {
             return 1;
         }
+        //
+        // Initialize wrapping classes of real signals and their DFT
         s2.initialize(s2_data,dnx,dny);
         hs2.initialize(hs2_data,dnx,dny);
-        //im_i.initialize(im_i_data,dnx,dny);
         him.initialize(him_data,dnx,dny);
         hs2_sum.initialize(hs2_sum_data,dnx,dny);
         //
@@ -185,11 +188,13 @@ int NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int dnx, int dny, string fname
         im_to_him=fftw_plan_dft_r2c_2d(dnx,dny,im_i_data,him_data,FFTW_ESTIMATE);
     }        
    else {
+        //
+        // Could not allocate enough memory
         if (s2_data==NULL || hs2_data==NULL || him_data==NULL) {
             return 1;
         }        
         //
-        // Memory successfully allocated
+        // Initialize wrapping classes of real signals and their DFT
         s2.initialize(s2_data,dnx,dny);
         hs2.initialize(hs2_data,dnx,dny);
         him.initialize(him_data,dnx,dny);
@@ -197,43 +202,26 @@ int NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int dnx, int dny, string fname
         // Create FFTW plan
         im_to_him=fftw_plan_dft_r2c_2d(dnx,dny,im_data,him_data,FFTW_ESTIMATE);
     }
-       
-    cout << nDomainX << " " << dnx << endl;
-    cout << nDomainY << " " << dny << endl;
-    cout << nDomains << endl;        
-    
     //
     // Compute and add the contribution to hS2 of each sub-domain
     if (domainIsSegmented) {
         for (int iDomainX=0;iDomainX<nDomainX;iDomainX++) {
             for (int iDomainY=0;iDomainY<nDomainY;iDomainY++) { 
-                
                 cout << nDomainY*iDomainX+iDomainY+1 << " / " << nDomains << endl;
-                
-                
                 cout << "stage 1" << endl;
-                // Extract im_i, get him_i
                 for (int i=0;i<dnx;i++) {
                     for (int j=0;j<dny;j++) {
-                        //im_i(i,j)=im(iDomainX*nDomainX+i,iDomainY*nDomainY+j);
-                        //im_i_data[j+i*dny]=im_arr(iDomainX*nDomainX+i,iDomainY*nDomainY+j);
                         im_i_data[j+i*dny]=im_data[(iDomainX*dnx+i)*ny+iDomainY*dny+j];
                     }
                 }
-                
+                // 
                 cout << "stage 2" << endl;
-                
                 fftw_execute(im_to_him);
                 //
-                // Compute
-                
                 cout << "stage 3" << endl;
-                
                 get_full_anistropic_s2_by_FFT();
-
                 cout << "stage 4" << endl;
                 //
-                // Add contribution
                 for (int k=0;k<dnx*dnyh;k++) {
                     hs2_sum_data[k][REAL]+=hs2_data[k][REAL];
                     hs2_sum_data[k][IMAG]+=hs2_data[k][IMAG];
@@ -248,22 +236,17 @@ int NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int dnx, int dny, string fname
     }
     else {
         //
-        // Execute FFTW plan
         fftw_execute(im_to_him); 
         //
-        // Compute
         get_full_anistropic_s2_by_FFT();
     }
-  
     // Define FFTW plan for transformation hS2 -> S2
     if (domainIsSegmented) {     
-        // Define FFTW plan for transformation hS3 -> S3
-        //hs3_to_s3=fftw_plan_dft_c2r(4,dn,hs3_sum_data,s3_data,FFTW_ESTIMATE);    
+        // Define FFTW plan for transformation hS3 -> S3  
         hs2_to_s2=fftw_plan_dft_c2r_2d(dnx,dny,hs2_sum_data,s2_data,FFTW_ESTIMATE);
     }
     else {
         // Define FFTW plan for transformation hS3 -> S3
-        //hs3_to_s3=fftw_plan_dft_c2r(4,dn,hs3_data,s3_data,FFTW_ESTIMATE);  
         hs2_to_s2=fftw_plan_dft_c2r_2d(nx,ny,hs2_data,s2_data,FFTW_ESTIMATE);
     }    
     //
@@ -271,17 +254,8 @@ int NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int dnx, int dny, string fname
     fftw_execute(hs2_to_s2);  
     //    
     // Write output file
-    
-    double frac0=0;
-    for (int i=0;i<nx;i++) {
-        for (int j=0;j<ny;j++) {
-            frac0+=im_arr(i,j);
-        }
-    }
-    
     ofstream fout;
-    if (fname!="") fout.open(fname);    
-    
+    if (fname!="") fout.open(fname);
     for (int i=-dnx/2+1;i<=dnx/2;i++) {
         for (int j=0;j<=dny/2;j++) {
             fout << s2(i,j)/nDomains;
@@ -291,7 +265,6 @@ int NpcfTools::get_full_anisotropic_s2_by_seq_FFT(int dnx, int dny, string fname
     }
     fout.close();
     cout << endl << s2(0,0)/nDomains << endl;    
-    
     //
     // Destroy FFTW plan and free memory
     fftw_destroy_plan(hs2_to_s2);    
