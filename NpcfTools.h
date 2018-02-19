@@ -68,16 +68,12 @@ private:
     fftw_complex *him_data = NULL;
     FftOfRealSignal2D him;
     fftw_plan im_to_him = NULL;
-    
-    double *im_i_data = NULL;    
-    //RealSignal2D im_i;    
-    
+    double *im_i_data = NULL;     
     //
     // Data structures for FFT-based estimators of S2
     double *s2_data = NULL; 
     fftw_complex *hs2_sum_data = NULL; 
     FftOfRealSignal2D hs2_sum;
-    
     fftw_complex *hs2_data = NULL; 
     FftOfRealSignal2D hs2;
     fftw_plan hs2_to_s2 = NULL;
@@ -86,7 +82,6 @@ private:
     double *s3_data = NULL; 
     fftw_complex *hs3_sum_data = NULL; 
     FftOfRealSignal4D hs3_sum;
-    
     fftw_complex *hs3_data = NULL; 
     FftOfRealSignal4D hs3;
     fftw_plan hs3_to_s3 = NULL;
