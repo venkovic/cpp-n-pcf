@@ -1,10 +1,10 @@
 ## npcf
 
-##### A C++ program for estimation and parametric inference of n-point correlation functions of bi-dimensional random signals sampled on regular grids.
+##### C++ code for FFT-based estimation of 2- and 3-points correlation functions of bi-dimensional signals sampled on structured grids.
 
 Author: Nicolas Venkovic
 
-email: nvenkov1@jhu.edu
+email: venkovic@gmail.com
 
 
 
@@ -74,7 +74,7 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
   - fname (optional) :
 
-    ​
+    
 
 - void **get_anisotropic_map_s3**(int **nx**, int **ny**, int **dx1**, int **dy1**, int **dx2**, int **dy2**, string **fname**="")
 
@@ -88,7 +88,7 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
   - fname (optional) 
 
-    ​
+    
 
 Example:
 
