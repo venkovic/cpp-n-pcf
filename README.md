@@ -12,7 +12,7 @@ email: venkovic@gmail.com.
 
 #### Supporting document:
 
-- [npcf.ipynb](https://github.com/nvenkov1/n-pcf/blob/master/npcf.ipynb).
+- Jupyter notebook ([npcf.ipynb](https://github.com/nvenkov1/n-pcf/blob/master/npcf.ipynb)).
 
 #### Compiler and dependencies:
 
