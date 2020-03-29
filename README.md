@@ -66,31 +66,9 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
 - void **get_anisotropic_map_s2**(int **nx**, int **ny**, string **fname**="")
 
-  Computes stuff.
-
-  - nx, ny :
-
-  - dx1, dy1 :
-
-  - dx2, dy2 :
-
-  - fname (optional) :
-
-    
-
 - void **get_anisotropic_map_s3**(int **nx**, int **ny**, int **dx1**, int **dy1**, int **dx2**, int **dy2**, string **fname**="")
 
-  Computes stuff.
-
-  - nx, ny :
-
-  - dx1, dy1 :
-
-  - dx2, dy2 :
-
-  - fname (optional) 
-
-    
+  
 
 Example:
 
