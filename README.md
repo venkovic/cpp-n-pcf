@@ -1,10 +1,10 @@
-## npcf
+## n-pcf
 
 ##### C++ code for FFT-based estimation of 2- and 3-points correlation functions of bi-dimensional signals sampled on structured grids.
 
 Author: Nicolas Venkovic
 
-email: venkovic@gmail.com
+email: venkovic@gmail.com.
 
 
 
@@ -62,7 +62,7 @@ s3(0,0,0,0) = 0.668750, s3(0,0,0,-1) = 0.631250, s3(0,0,0,-2) = 0.602500
 
 #### Public functions of NpcfTools:
 
-- void **get_anisotropic_map_s3**(int **nx**, int **ny**, string **fname**="")
+- void **get_anisotropic_map_s2**(int **nx**, int **ny**, string **fname**="")
 
   Computes stuff.
 
@@ -153,27 +153,6 @@ npcf.get_anisotropic_map_s3(60,60,0,1,1,0,"im00.s3");
   s3(nx*dx1,nx*dy1,0,0)        ,
   ```
 
-  ##### Isotropic estimators:
-
-- foo.iso-s2 : Isotropic 2-pcf estimator.
-
-  ```
-  -
-  ```
-
-
-- foo.iso-s3 : Isotropic 3-pcf estimator.
-
-  ```
-  -
-  ```
-
-
-- foo.iso-s4 : Isotropic 4-pcf estimator.
-
-  ```
-  -
-  ```
 
 #### Pending tasks:
 
