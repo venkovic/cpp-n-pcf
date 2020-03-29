@@ -1,6 +1,8 @@
 ## n-pcf
 
-##### C++ code for FFT-based estimation of 2- and 3-points correlation functions of bi-dimensional signals sampled on structured grids.
+##### C++ code for FFT-based estimation of 2- and 3-points correlation functions of 2D signals sampled on structured grids.
+
+
 
 Author: Nicolas Venkovic
 
