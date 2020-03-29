@@ -4,7 +4,7 @@
 
 
 
-Author: Nicolas Venkovic
+Author: Nicolas Venkovic.
 
 email: venkovic@gmail.com.
 
