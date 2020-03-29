@@ -123,24 +123,9 @@ npcf.get_anisotropic_map_s3(60,60,0,1,1,0,"im00.s3");
   ```
 
 
-- foo.s4 : (?)-tropic 4-pcf estimator.
-
-  ```
-  nx,ny
-  x1,y1,x2,y2
-  s3(0,0,0,0)                  ,
-  s3(dx1,dy1,0,0)              ,
-  s3(2*dx1,2*dy1,0,0)          , s3(2*dx1,2*dy1,0,0),
-        :
-        :     
-  s3((nx-1)*dx1,(nx-1)*dy1,0,0), 
-  s3(nx*dx1,nx*dy1,0,0)        ,
-  ```
-
-
 #### Pending tasks:
 
- -  ERROR to fix when almost all data entries are equal. For example, try
+ -  Error to fix when almost all data entries are equal. For example, try
 
     ```bash
     $ ./dist/GNU-Linux/npcf 12 11 0 0 im00.csv
